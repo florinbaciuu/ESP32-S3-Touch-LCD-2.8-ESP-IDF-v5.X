@@ -14,7 +14,6 @@
 
 #include "lcd_bsp_interface.h"
 
-
 // ========================================== //
 
 /**********************
@@ -33,10 +32,11 @@ void lv_disp_flush(lv_display_t* disp, const lv_area_t* area, uint8_t* px_map) {
 // -------------------------------
 // -------------------------------
 
-void lvgl_display_rotation_update_callback(lv_display_t * disp)
-{
-    switch(lv_display_get_rotation(disp))
-    {
+/***
+ * Rotation in runtime
+ */
+void lvgl_display_rotation_update_callback(lv_display_t* disp) {
+    switch (lv_display_get_rotation(disp)) {
         case LV_DISPLAY_ROTATION_0:
             esp_lcd_panel_swap_xy(panel_handle, false);
             esp_lcd_panel_mirror(panel_handle, true, false);
@@ -53,12 +53,8 @@ void lvgl_display_rotation_update_callback(lv_display_t * disp)
             esp_lcd_panel_swap_xy(panel_handle, true);
             esp_lcd_panel_mirror(panel_handle, false, false);
             break;
-
     }
-
 }
-
-
 
 // -------------------------------
 
@@ -168,8 +164,6 @@ void s_lvgl_display_panel_setup_config_properties() {
 
 // -------------------------------
 
-
-
 void lvgl_framework_init(void) {
     lv_init();
 #if LV_TICK_SOURCE == LV_TICK_SOURCE_CALLBACK
@@ -190,8 +184,6 @@ void lvgl_framework_init(void) {
 
     s_lvgl_input_device_config();
 }
-
-
 
 /************************************************** */
 
