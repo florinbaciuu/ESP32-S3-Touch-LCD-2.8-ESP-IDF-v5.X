@@ -40,7 +40,7 @@ void s_lvgl_display_panel_setup_config_properties() {
     lv_display_set_resolution(disp, LCD_WIDTH, LCD_HEIGHT);           // Seteaza rezolutia software
     lv_display_set_physical_resolution(disp, LCD_WIDTH, LCD_HEIGHT);  // Actualizeaza rezolutia reala
 
-    s_lvgl_display_panel_set_initial_rotation_config();
+    
 
     lv_display_set_render_mode(disp,
         (lv_display_render_mode_t) RENDER_MODE);  // Seteaza (lv_display_render_mode_t)
@@ -63,6 +63,8 @@ void lvgl_framework_init(void) {
     s_lvgl_port_init_locking_mutex();
     s_lvgl_set_buffers_config();                     // configure buffers based on CONFIG settings
     s_lvgl_display_panel_setup_config_properties();  // configure display properties based on CONFIG settings
+
+    // s_lvgl_display_panel_set_initial_rotation_config();
 
     lv_display_set_flush_cb(disp, lv_disp_flush);  // Set the flush callback which will be called to
                                                    // copy the rendered image to the display.
