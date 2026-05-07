@@ -1,6 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include <stdbool.h>
+#include "misc/lv_types.h"
 #include "freertos/FreeRTOS.h"
 
 #ifdef __cplusplus
@@ -21,7 +22,7 @@ extern "C" {
 void lvgl_kernel_start(void);
 
 // -------------------------------
-
+void lvgl_display_rotation_update_callback(lv_display_t * disp);
 
 void lvgl_execute_locked(void (*func)(void));
 void s_lvgl_input_device_config() ;
