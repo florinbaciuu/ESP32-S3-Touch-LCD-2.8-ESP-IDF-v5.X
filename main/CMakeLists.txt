@@ -26,7 +26,6 @@ set(app_priv_requires
     ${app_requires}
     board_pins
     log
-    lvgl_port_configuration
     freertos
     lvgl
     lcd_backlight_driver_interface

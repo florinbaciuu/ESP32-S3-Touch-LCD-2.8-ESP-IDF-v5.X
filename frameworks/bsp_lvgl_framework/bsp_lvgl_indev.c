@@ -1,5 +1,6 @@
 #include "lvgl_framework.h"
-#include "lvgl_port_configuration.h"
+#include "lvgl_framework_internals.h"
+#include "lvgl_framework_config.h"
 #include "indev/lv_indev.h"
 #include "touch_bsp_interface.h"
 #include "esp_log.h"

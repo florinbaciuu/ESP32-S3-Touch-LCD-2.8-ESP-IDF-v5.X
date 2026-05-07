@@ -24,7 +24,7 @@ set(
     log
     vernon_st7789t_driver
     bsp_spi_interface
-    lvgl_port_configuration
+    lvgl_framework_config
     board_pins
     board_config
     lvgl

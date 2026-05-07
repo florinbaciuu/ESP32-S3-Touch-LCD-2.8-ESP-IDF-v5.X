@@ -1,6 +1,6 @@
 
 #include "board_pins.h"
-#include "lvgl_port_configuration.h"
+#include "lvgl_framework_config.h"
 #include "lcd_bsp_interface.h"
 
 #include "display/lv_display.h"
@@ -8,7 +8,7 @@
 #include "esp_lcd_panel_ops.h"
 #include "esp_log.h"
 
-#include "Vernon_ST7789T_driver.h"
+#include "vernon_st7789t_driver.h"
 #include "spi_bsp_interface.h"
 
 static const char* TAG_LCD = "ST7789";
@@ -17,7 +17,7 @@ lv_display_t*          disp;
 esp_lcd_panel_handle_t panel_handle = NULL;
 
 void bsp_lcd_init(void) {
-    bsp_spi_init(); // Initialize the SPI bus for LCD communication
+    bsp_spi_init();  // Initialize the SPI bus for LCD communication
 
     ESP_LOGI(TAG_LCD, "Install panel IO");
     esp_lcd_panel_io_handle_t     io_handle = NULL;
@@ -46,23 +46,23 @@ void bsp_lcd_init(void) {
     ESP_ERROR_CHECK(esp_lcd_panel_reset(panel_handle));
     ESP_ERROR_CHECK(esp_lcd_panel_init(panel_handle));
 
-#if (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_0) //* DISPLAY_ROTATION_0
+#if (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_0)  //* DISPLAY_ROTATION_0
     ESP_LOGI(TAG_LCD, "Set display rotation to 0 degrees");
     ESP_ERROR_CHECK(esp_lcd_panel_mirror(panel_handle, true, false));
     esp_lcd_panel_swap_xy(panel_handle, false);
-#elif (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_90) //* DISPLAY_ROTATION_90
+#elif (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_90)   //* DISPLAY_ROTATION_90
     ESP_LOGI(TAG_LCD, "Set display rotation to 90 degrees");
     ESP_ERROR_CHECK(esp_lcd_panel_mirror(panel_handle, true, true));
     esp_lcd_panel_swap_xy(panel_handle, true);
-#elif (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_180) //* DISPLAY_ROTATION_180
+#elif (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_180)  //* DISPLAY_ROTATION_180
     ESP_LOGI(TAG_LCD, "Set display rotation to 180 degrees");
     ESP_ERROR_CHECK(esp_lcd_panel_mirror(panel_handle, false, true));
     esp_lcd_panel_swap_xy(panel_handle, false);
-#elif (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_270) //* DISPLAY_ROTATION_270
+#elif (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_270)  //* DISPLAY_ROTATION_270
     ESP_LOGI(TAG_LCD, "Set display rotation to 270 degrees");
     ESP_ERROR_CHECK(esp_lcd_panel_mirror(panel_handle, false, false));
     esp_lcd_panel_swap_xy(panel_handle, true);
-#endif  // LVGL_DISPLAY_PANEL_ROTATION
+#endif                                                       // LVGL_DISPLAY_PANEL_ROTATION
 
     // user can flush pre-defined pattern to the screen before we turn on the screen or backlight
     ESP_ERROR_CHECK(esp_lcd_panel_disp_on_off(panel_handle, true));

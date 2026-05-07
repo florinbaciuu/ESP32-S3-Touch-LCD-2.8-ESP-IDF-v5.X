@@ -97,7 +97,7 @@ static void btn_rotate_event_cb(lv_event_t* e) {
             disp,
             (lv_display_rotation_t) rotation);
         // sincronizare hardware display
-        lvgl_display_rotation_update_callback(disp);
+        lvgl_displ_rotate_now();
         ESP_LOGI("UI", "Display rotation changed to %d", rotation);
     }
 }

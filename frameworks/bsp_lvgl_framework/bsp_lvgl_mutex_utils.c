@@ -1,4 +1,5 @@
 #include "lvgl_framework.h"
+#include "lvgl_framework_internals.h"
 
 static SemaphoreHandle_t s_lvgl_mutex = NULL;
 

@@ -2,7 +2,7 @@
 
 set(
     srcs 
-   "lvgl_port_configuration.c"
+   "lvgl_framework_config.c"
 )
 
 set(

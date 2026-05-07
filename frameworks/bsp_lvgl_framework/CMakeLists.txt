@@ -3,6 +3,7 @@
 set(
     srcs
     "bsp_lvgl_framework.c"
+    "bsp_lvgl_rotation.c"
     "bsp_lvgl_freertos_utils.c"
     "bsp_lvgl_mutex_utils.c"
     "bsp_lvgl_indev.c"
@@ -25,7 +26,7 @@ set(
     esp_system
     esp_common
     log
-    lvgl_port_configuration
+    lvgl_framework_config
     board_pins
     board_config
     lvgl

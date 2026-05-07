@@ -1,6 +1,7 @@
 
 #include "lvgl_framework.h"
-#include "lvgl_port_configuration.h"
+#include "lvgl_framework_internals.h"
+#include "lvgl_framework_config.h"
 #include "freertos/idf_additions.h"
 #include "board_pins.h"
 #include "esp_log.h"

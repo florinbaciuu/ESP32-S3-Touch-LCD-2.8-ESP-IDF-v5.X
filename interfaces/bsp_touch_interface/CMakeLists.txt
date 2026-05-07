@@ -23,7 +23,6 @@ set(
     log
     esp_lcd_touch
     cst328_driver
-    lvgl_port_configuration
     board_pins
     board_config
     bsp_i2c_interface
