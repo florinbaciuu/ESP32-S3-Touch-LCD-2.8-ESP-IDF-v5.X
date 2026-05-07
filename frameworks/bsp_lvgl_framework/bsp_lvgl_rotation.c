@@ -1,6 +1,5 @@
 
 #include "esp_log.h"
-
 #include "lvgl_framework.h"
 #include "lvgl_framework_internals.h"
 #include "display/lv_display.h"
@@ -8,7 +7,6 @@
 #include "lcd_bsp_interface.h"
 #include "esp_lcd_panel_ops.h"
 // -------------------------------
-#include "lvgl_framework_internals.h"
 // -------------------------------
 
 /***
@@ -37,8 +35,8 @@ void lvgl_display_rotation_update_callback(lv_display_t* disp) {
 
 // -------------------------------
 
-void s_lvgl_display_panel_set_initial_rotation_config(){
-    #if (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_0)
+void s_lvgl_display_panel_set_initial_rotation_config() {
+#if (LVGL_DISPLAY_PANEL_ROTATION == DISPLAY_ROTATION_0)
     ESP_LOGI("LVGL", "Set display rotation to 0 degrees");
     lv_display_set_rotation(disp, (lv_display_rotation_t) LV_DISPLAY_ROTATION_0);  // Seteaza rotatia lvgl LV_DISPLAY_ROTATION_0
     lvgl_display_rotation_update_callback(disp);
@@ -59,19 +57,6 @@ void s_lvgl_display_panel_set_initial_rotation_config(){
 
 // -------------------------------
 
-void lvgl_displ_rotate_now(){
+void lvgl_displ_rotate_now() {
     lvgl_display_rotation_update_callback(disp);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

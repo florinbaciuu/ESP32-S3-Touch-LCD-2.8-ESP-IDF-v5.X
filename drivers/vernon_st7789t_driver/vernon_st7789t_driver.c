@@ -25,7 +25,11 @@
 
 #include "vernon_st7789t_driver.h"
 
+//+++++++++++++++++++++++++++++++++++++++//
+
 static const char *TAG = "lcd_panel.st7789t";
+
+//+++++++++++++++++++++++++++++++++++++++//
 
 static esp_err_t panel_st7789t_del(esp_lcd_panel_t *panel);
 static esp_err_t panel_st7789t_reset(esp_lcd_panel_t *panel);
@@ -36,6 +40,8 @@ static esp_err_t panel_st7789t_mirror(esp_lcd_panel_t *panel, bool mirror_x, boo
 static esp_err_t panel_st7789t_swap_xy(esp_lcd_panel_t *panel, bool swap_axes);
 static esp_err_t panel_st7789t_set_gap(esp_lcd_panel_t *panel, int x_gap, int y_gap);
 static esp_err_t panel_st7789t_disp_on_off(esp_lcd_panel_t *panel, bool off);
+
+//+++++++++++++++++++++++++++++++++++++++//
 
 typedef struct {
     esp_lcd_panel_t base;
@@ -48,6 +54,8 @@ typedef struct {
     uint8_t madctl_val; // save current value of LCD_CMD_MADCTL register
     uint8_t colmod_cal; // save surrent value of LCD_CMD_COLMOD register
 } st7789t_panel_t;
+
+//+++++++++++++++++++++++++++++++++++++++//
 
 esp_err_t esp_lcd_new_panel_st7789t(const esp_lcd_panel_io_handle_t io, const esp_lcd_panel_dev_st7789t_config_t *panel_dev_config, esp_lcd_panel_handle_t *ret_panel)
 {
@@ -124,6 +132,8 @@ err:
     return ret;
 }
 
+//+++++++++++++++++++++++++++++++++++++++//
+
 static esp_err_t panel_st7789t_del(esp_lcd_panel_t *panel)
 {
     st7789t_panel_t *st7789t = __containerof(panel, st7789t_panel_t, base);
@@ -135,6 +145,8 @@ static esp_err_t panel_st7789t_del(esp_lcd_panel_t *panel)
     free(st7789t);
     return ESP_OK;
 }
+
+//+++++++++++++++++++++++++++++++++++++++//
 
 static esp_err_t panel_st7789t_reset(esp_lcd_panel_t *panel)
 {
@@ -151,9 +163,10 @@ static esp_err_t panel_st7789t_reset(esp_lcd_panel_t *panel)
         esp_lcd_panel_io_tx_param(io, LCD_CMD_SWRESET, NULL, 0);
         vTaskDelay(pdMS_TO_TICKS(20)); // spec, wait at least 5m before sending new command
     }
-
     return ESP_OK;
 }
+
+//+++++++++++++++++++++++++++++++++++++++//
 
 static esp_err_t panel_st7789t_init(esp_lcd_panel_t *panel)
 {
@@ -204,6 +217,8 @@ static esp_err_t panel_st7789t_init(esp_lcd_panel_t *panel)
     return ESP_OK;
 }
 
+//+++++++++++++++++++++++++++++++++++++++//
+
 static esp_err_t panel_st7789t_draw_bitmap(esp_lcd_panel_t *panel, int x_start, int y_start, int x_end, int y_end, const void *color_data)
 {
     st7789t_panel_t *st7789t = __containerof(panel, st7789t_panel_t, base);
@@ -235,6 +250,8 @@ static esp_err_t panel_st7789t_draw_bitmap(esp_lcd_panel_t *panel, int x_start, 
     return ESP_OK;
 }
 
+//+++++++++++++++++++++++++++++++++++++++//
+
 static esp_err_t panel_st7789t_invert_color(esp_lcd_panel_t *panel, bool invert_color_data)
 {
     st7789t_panel_t *st7789t = __containerof(panel, st7789t_panel_t, base);
@@ -248,6 +265,8 @@ static esp_err_t panel_st7789t_invert_color(esp_lcd_panel_t *panel, bool invert_
     esp_lcd_panel_io_tx_param(io, command, NULL, 0);
     return ESP_OK;
 }
+
+//+++++++++++++++++++++++++++++++++++++++//
 
 static esp_err_t panel_st7789t_mirror(esp_lcd_panel_t *panel, bool mirror_x, bool mirror_y)
 {
@@ -269,6 +288,8 @@ static esp_err_t panel_st7789t_mirror(esp_lcd_panel_t *panel, bool mirror_x, boo
     return ESP_OK;
 }
 
+//+++++++++++++++++++++++++++++++++++++++//
+
 static esp_err_t panel_st7789t_swap_xy(esp_lcd_panel_t *panel, bool swap_axes)
 {
     st7789t_panel_t *st7789t = __containerof(panel, st7789t_panel_t, base);
@@ -284,6 +305,8 @@ static esp_err_t panel_st7789t_swap_xy(esp_lcd_panel_t *panel, bool swap_axes)
     return ESP_OK;
 }
 
+//+++++++++++++++++++++++++++++++++++++++//
+
 static esp_err_t panel_st7789t_set_gap(esp_lcd_panel_t *panel, int x_gap, int y_gap)
 {
     st7789t_panel_t *st7789t = __containerof(panel, st7789t_panel_t, base);
@@ -291,6 +314,8 @@ static esp_err_t panel_st7789t_set_gap(esp_lcd_panel_t *panel, int x_gap, int y_
     st7789t->y_gap = y_gap;
     return ESP_OK;
 }
+
+//+++++++++++++++++++++++++++++++++++++++//
 
 static esp_err_t panel_st7789t_disp_on_off(esp_lcd_panel_t *panel, bool on_off)
 {
@@ -305,3 +330,5 @@ static esp_err_t panel_st7789t_disp_on_off(esp_lcd_panel_t *panel, bool on_off)
     esp_lcd_panel_io_tx_param(io, command, NULL, 0);
     return ESP_OK;
 }
+
+//+++++++++++++++++++++++++++++++++++++++//

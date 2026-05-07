@@ -124,10 +124,10 @@ void create_tabs_ui(void) {
     lv_tabview_set_tab_bar_position(tabview, dir);
 
     // TABS
-    lv_obj_t* tab1      = lv_tabview_add_tab(tabview, "Tab 1");
-    lv_obj_t* tab2      = lv_tabview_add_tab(tabview, "Tab 2");
-    lv_obj_t* tab3      = lv_tabview_add_tab(tabview, "Tab 3");
-    lv_obj_t* tab4      = lv_tabview_add_tab(tabview, "Tab 4");
+    lv_obj_t* tab1 = lv_tabview_add_tab(tabview, "Tab 1");
+    lv_obj_t* tab2 = lv_tabview_add_tab(tabview, "Tab 2");
+    lv_obj_t* tab3 = lv_tabview_add_tab(tabview, "Tab 3");
+    lv_obj_t* tab4 = lv_tabview_add_tab(tabview, "Tab 4");
 
     // =========================================================
     // Vuttons Container

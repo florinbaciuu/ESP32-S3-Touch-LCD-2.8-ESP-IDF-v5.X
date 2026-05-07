@@ -3,8 +3,6 @@
 
 static SemaphoreHandle_t s_lvgl_mutex = NULL;
 
-
-
 // -------------------------------
 
 bool s_lvgl_port_init_locking_mutex(void) {
@@ -14,8 +12,6 @@ bool s_lvgl_port_init_locking_mutex(void) {
 }
 
 // -------------------------------
-
-
 // -------------------------------
 
 bool s_lvgl_lock(TickType_t timeout_ms) {
@@ -45,10 +41,8 @@ void s_lvgl_unlock(void) {
  *    // Your code that interacts with LVGL goes here
  * });
  */
-void lvgl_execute_locked(void (*func)(void))
-{
-    if (s_lvgl_lock(portMAX_DELAY))
-    {
+void lvgl_execute_locked(void (*func)(void)) {
+    if (s_lvgl_lock(portMAX_DELAY)) {
         func();
         s_lvgl_unlock();
     }

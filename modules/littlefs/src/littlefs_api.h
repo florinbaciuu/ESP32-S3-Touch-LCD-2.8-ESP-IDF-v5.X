@@ -20,14 +20,14 @@ extern "C" {
 #endif
 
 #if CONFIG_LITTLEFS_USE_MTIME
-    #define ESP_LITTLEFS_ATTR_COUNT 1
+#define ESP_LITTLEFS_ATTR_COUNT 1
 #else
-    #define ESP_LITTLEFS_ATTR_COUNT 0
+#define ESP_LITTLEFS_ATTR_COUNT 0
 #endif
 
 /**
  * @brief a file descriptor
- * That's also a singly linked list used for keeping tracks of all opened file descriptor 
+ * That's also a singly linked list used for keeping tracks of all opened file descriptor
  *
  * Shortcomings/potential issues of 32-bit hash (when CONFIG_LITTLEFS_USE_ONLY_HASH) listed here:
  *     * unlink - If a different file is open that generates a hash collision, it will report an
@@ -37,7 +37,7 @@ extern "C" {
  * Potential consequences:
  *    1. A file cannot be deleted while a collision-geneating file is open.
  *       Worst-case, if the other file is always open during the lifecycle
- *       of your app, it's collision file cannot be deleted, which in the 
+ *       of your app, it's collision file cannot be deleted, which in the
  *       worst-case could cause storage-capacity issues.
  *    2. Same as (1), but for renames
  */
@@ -46,16 +46,16 @@ typedef struct _vfs_littlefs_file_t {
 
     /* Allocate all other necessary buffers */
     struct lfs_file_config lfs_file_config;
-    uint8_t lfs_buffer[CONFIG_LITTLEFS_CACHE_SIZE];
+    uint8_t                lfs_buffer[CONFIG_LITTLEFS_CACHE_SIZE];
 #if ESP_LITTLEFS_ATTR_COUNT
     struct lfs_attr lfs_attr[ESP_LITTLEFS_ATTR_COUNT];
-    time_t lfs_attr_time_buffer;
+    time_t          lfs_attr_time_buffer;
 #endif
 
-    uint32_t hash;
-    struct _vfs_littlefs_file_t * next;       /*!< Pointer to next file in Singly Linked List */
+    uint32_t                     hash;
+    struct _vfs_littlefs_file_t* next; /*!< Pointer to next file in Singly Linked List */
 #ifndef CONFIG_LITTLEFS_USE_ONLY_HASH
-    char     * path;
+    char* path;
 #endif
 } vfs_littlefs_file_t;
 
@@ -63,30 +63,30 @@ typedef struct _vfs_littlefs_file_t {
  * @brief littlefs definition structure
  */
 typedef struct {
-    lfs_t *fs;                                /*!< Handle to the underlying littlefs */
-    SemaphoreHandle_t lock;                   /*!< FS lock */
+    lfs_t*            fs;   /*!< Handle to the underlying littlefs */
+    SemaphoreHandle_t lock; /*!< FS lock */
 
 #ifdef CONFIG_LITTLEFS_SDMMC_SUPPORT
-    sdmmc_card_t *sdcard;                     /*!< The SD card driver handle on which littlefs is located */
+    sdmmc_card_t* sdcard; /*!< The SD card driver handle on which littlefs is located */
 #endif
 
-    const esp_partition_t* partition;         /*!< The partition on which littlefs is located */
+    const esp_partition_t* partition; /*!< The partition on which littlefs is located */
 
 #ifdef CONFIG_LITTLEFS_MMAP_PARTITION
-    const void *mmap_data;                    /*!< Buffer of mmapped partition */
-    esp_partition_mmap_handle_t mmap_handle;  /*!< Handle to mmapped partition */
+    const void*                 mmap_data;   /*!< Buffer of mmapped partition */
+    esp_partition_mmap_handle_t mmap_handle; /*!< Handle to mmapped partition */
 #endif
 
-    char base_path[ESP_VFS_PATH_MAX+1];       /*!< Mount point */
+    char base_path[ESP_VFS_PATH_MAX + 1]; /*!< Mount point */
 
-    struct lfs_config cfg;                    /*!< littlefs Mount configuration */
+    struct lfs_config cfg; /*!< littlefs Mount configuration */
 
-    vfs_littlefs_file_t *file;                /*!< Singly Linked List of files */
+    vfs_littlefs_file_t* file; /*!< Singly Linked List of files */
 
-    vfs_littlefs_file_t **cache;              /*!< A cache of pointers to the opened files */
-    uint16_t             cache_size;          /*!< The cache allocated size (in pointers) */
-    uint16_t             fd_count;            /*!< The count of opened file descriptor used to speed up computation */
-    bool                 read_only;           /*!< Filesystem is read-only */
+    vfs_littlefs_file_t** cache;      /*!< A cache of pointers to the opened files */
+    uint16_t              cache_size; /*!< The cache allocated size (in pointers) */
+    uint16_t              fd_count;   /*!< The count of opened file descriptor used to speed up computation */
+    bool                  read_only;  /*!< Filesystem is read-only */
 } esp_littlefs_t;
 
 #ifdef CONFIG_LITTLEFS_MMAP_PARTITION
@@ -97,8 +97,7 @@ typedef struct {
  *
  * @return errorcode. 0 on success.
  */
-int littlefs_esp_part_read_mmap(const struct lfs_config *c, lfs_block_t block,
-                           lfs_off_t off, void *buffer, lfs_size_t size);
+int littlefs_esp_part_read_mmap(const struct lfs_config* c, lfs_block_t block, lfs_off_t off, void* buffer, lfs_size_t size);
 #endif
 
 /**
@@ -108,20 +107,18 @@ int littlefs_esp_part_read_mmap(const struct lfs_config *c, lfs_block_t block,
  *
  * @return errorcode. 0 on success.
  */
-int littlefs_esp_part_read(const struct lfs_config *c, lfs_block_t block,
-                           lfs_off_t off, void *buffer, lfs_size_t size);
+int littlefs_esp_part_read(const struct lfs_config* c, lfs_block_t block, lfs_off_t off, void* buffer, lfs_size_t size);
 
 /**
  * @brief Program a region in a block.
  *
- * The block must have previously been erased. 
+ * The block must have previously been erased.
  * Negative error codes are propogated to the user.
  * May return LFS_ERR_CORRUPT if the block should be considered bad.
  *
  * @return errorcode. 0 on success.
  */
-int littlefs_esp_part_write(const struct lfs_config *c, lfs_block_t block,
-                            lfs_off_t off, const void *buffer, lfs_size_t size);
+int littlefs_esp_part_write(const struct lfs_config* c, lfs_block_t block, lfs_off_t off, const void* buffer, lfs_size_t size);
 
 /**
  * @brief Erase a block.
@@ -132,7 +129,7 @@ int littlefs_esp_part_write(const struct lfs_config *c, lfs_block_t block,
  * May return LFS_ERR_CORRUPT if the block should be considered bad.
  * @return errorcode. 0 on success.
  */
-int littlefs_esp_part_erase(const struct lfs_config *c, lfs_block_t block);
+int littlefs_esp_part_erase(const struct lfs_config* c, lfs_block_t block);
 
 /**
  * @brief Sync the state of the underlying block device.
@@ -141,7 +138,7 @@ int littlefs_esp_part_erase(const struct lfs_config *c, lfs_block_t block);
  *
  * @return errorcode. 0 on success.
  */
-int littlefs_esp_part_sync(const struct lfs_config *c);
+int littlefs_esp_part_sync(const struct lfs_config* c);
 
 #ifdef CONFIG_LITTLEFS_SDMMC_SUPPORT
 
@@ -152,8 +149,7 @@ int littlefs_esp_part_sync(const struct lfs_config *c);
  *
  * @return errorcode. 0 on success.
  */
-int littlefs_sdmmc_read(const struct lfs_config *c, lfs_block_t block,
-                           lfs_off_t off, void *buffer, lfs_size_t size);
+int littlefs_sdmmc_read(const struct lfs_config* c, lfs_block_t block, lfs_off_t off, void* buffer, lfs_size_t size);
 
 /**
  * @brief Program a region in a block on SD card.
@@ -164,8 +160,7 @@ int littlefs_sdmmc_read(const struct lfs_config *c, lfs_block_t block,
  *
  * @return errorcode. 0 on success.
  */
-int littlefs_sdmmc_write(const struct lfs_config *c, lfs_block_t block,
-                            lfs_off_t off, const void *buffer, lfs_size_t size);
+int littlefs_sdmmc_write(const struct lfs_config* c, lfs_block_t block, lfs_off_t off, const void* buffer, lfs_size_t size);
 
 /**
  * @brief Erase a block on SD card.
@@ -176,7 +171,7 @@ int littlefs_sdmmc_write(const struct lfs_config *c, lfs_block_t block,
  * May return LFS_ERR_CORRUPT if the block should be considered bad.
  * @return errorcode. 0 on success.
  */
-int littlefs_sdmmc_erase(const struct lfs_config *c, lfs_block_t block);
+int littlefs_sdmmc_erase(const struct lfs_config* c, lfs_block_t block);
 
 /**
  * @brief Sync the state of the underlying SD card.
@@ -185,9 +180,9 @@ int littlefs_sdmmc_erase(const struct lfs_config *c, lfs_block_t block);
  *
  * @return errorcode. 0 on success.
  */
-int littlefs_sdmmc_sync(const struct lfs_config *c);
+int littlefs_sdmmc_sync(const struct lfs_config* c);
 
-#endif // CONFIG_LITTLEFS_SDMMC_SUPPORT
+#endif  // CONFIG_LITTLEFS_SDMMC_SUPPORT
 
 #ifdef __cplusplus
 }

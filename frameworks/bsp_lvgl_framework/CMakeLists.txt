@@ -7,6 +7,7 @@ set(
     "bsp_lvgl_freertos_utils.c"
     "bsp_lvgl_mutex_utils.c"
     "bsp_lvgl_indev.c"
+    "bsp_lvgl_buffers.c"
 )
 
 set(

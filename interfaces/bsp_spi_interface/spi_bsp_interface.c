@@ -8,17 +8,16 @@
 
 //======================================================================================================//
 
-static const char* TAG    = "SPI Interface";
+static const char* TAG = "SPI Interface";
 
 //======================================================================================================//
 /**
  * @brief spi master initialization
  */
-void bsp_spi_init(void)
-{
+void bsp_spi_init(void) {
     ESP_LOGI(TAG, "Initialize SPI bus");
     static bool initialized = false;
-    if(initialized)
+    if (initialized)
         return;
     spi_bus_config_t buscfg = {
         .sclk_io_num     = EXAMPLE_PIN_NUM_SCLK,
@@ -32,4 +31,3 @@ void bsp_spi_init(void)
     initialized = true;
     ESP_LOGI(TAG, "SPI bus initialized");
 }
-
